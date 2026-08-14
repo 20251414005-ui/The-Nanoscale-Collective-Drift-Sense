@@ -21,8 +21,8 @@ so the threshold sweep afterward is cheap rather than re-running the full
 scale+rotation search per threshold value.
 
 Usage:
-    python3 pr_curve.py --manifest data/train_defects_full/manifest.csv --tolerance 5
-    python3 pr_curve.py --manifest data/train_variable_scale/manifest.csv --tolerance 5 --limit 200
+    python3 pr_curve.py --manifest data/train_canonical/manifest.csv --tolerance 5
+    python3 pr_curve.py --manifest data/train_canonical/manifest.csv --tolerance 5 --limit 200
 """
 import argparse
 import os
@@ -168,6 +168,22 @@ def main():
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     plt.savefig(args.out, dpi=150, bbox_inches="tight")
     print(f"\nSaved plot to {args.out}")
+
+    print(f"\nVerifying chosen threshold ({best_overall[2]:.4f}) generalizes "
+          f"across noise buckets (not just the bucket it was optimized on):")
+    for bucket in buckets:
+        sub = res[res["noise_bucket"] == bucket]
+        if len(sub) == 0:
+            continue
+        reported = sub[sub["gap"] > best_overall[2]]
+        if len(reported) == 0:
+            print(f"  {bucket:14s} n={len(sub):4d}  no predictions above threshold")
+            continue
+        correct_reported = (reported["error"] <= args.tolerance).sum()
+        precision = correct_reported / len(reported)
+        recall = correct_reported / len(sub)
+        print(f"  {bucket:14s} n={len(sub):4d}  precision={precision:.3f}  "
+              f"recall={recall:.3f}  reported={len(reported)}/{len(sub)}")
 
     print(f"\nBest F1 overall: bucket={best_overall[0]}  F1={best_overall[1]:.3f}  "
           f"confidence_gap_threshold={best_overall[2]:.4f}")
