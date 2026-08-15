@@ -25,13 +25,13 @@ dataset and its manifest.
 
 | Metric | Classical (`localize.py`) | DL (`siamese_localizer_canonical.pt`) |
 |---|---|---|
-| @1px | 39.0% | 3.4% |
-| @2px | 39.2% | 13.6% |
-| @4px | 39.5% | 42.2% |
-| @5px | **40.0%** | **56.2%** |
-| @10px | 40.2% | 84.9% |
+| @1px | 39.0% | 3.6% |
+| @2px | 39.2% | 14.2% |
+| @4px | 39.5% | 45.0% |
+| @5px | **40.0%** | **58.2%** |
+| @10px | 40.2% | 87.9% |
 | Avg time / pair | 0.170 s | 0.041–0.050 s |
-| Low-confidence flagged | 219 / 800 | 1 / 800 |
+| Low-confidence flagged | 219 / 800 | 2 / 800 |
 
 The DL model wins on both accuracy and speed once retrained on
 defect-injected, variable-scale data. Full development history and root-cause
@@ -194,7 +194,7 @@ accuracy statistics skipped rather than the script failing.
    trustworthy failure signal and is proportional to its actual accuracy.
 5. **Classical fails binary; DL fails gradually.** Classical accuracy is
    nearly flat from 1px to 5px (wrong-tile-entirely), while DL accuracy
-   climbs steadily (3.4% → 56.2%), suggesting DL would benefit from further
+   climbs steadily (3.6% → 58.2%), suggesting DL would benefit from further
    training or finer tolerance in ways a sub-pixel refinement step would not
    help the classical pipeline.
 
