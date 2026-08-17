@@ -1,7 +1,7 @@
 # DriftSense
 
 **SEMICON India 2026 Hackathon — Applied Materials Problem Statement PS-2**
-**Team:** Prasad, Pratyush
+**Team:** The Nanoscale Collective 
 
 DriftSense locates a shrunk reference pattern inside a larger, noisier search
 image of a semiconductor wafer. Given a 1000×1000 reference image and a
@@ -76,7 +76,9 @@ drift-sense/
 │   └── full_results.csv        # merged: paths, ground truth, generation metadata, both predictions
 ├── docs/
 │   ├── DriftSense_Failure_Case_Analysis.pdf
-│   └── DriftSense_Citations.pdf
+│   |── DriftSense_Citations.pdf
+|   |—— The Nanoscale Collective_PS02.pdf
+|   |__ The Nanoscale Collective_PS02.pptx 
 ├── requirements.txt
 └── README.md
 ```
